@@ -18,13 +18,13 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-// 
-import DataStore from "./store";
-const store = new Vuex.Store(DataStore);
-
 window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(Vuex);
+
+// Creación del datastore
+import DataStore from "./store";
+const store = new Vuex.Store(DataStore);
 
 /**
  * The following block of code may be used to automatically register your
@@ -38,7 +38,7 @@ Vue.use(Vuex);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 // GLOBAL COMPONENT REGISTRATION
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
