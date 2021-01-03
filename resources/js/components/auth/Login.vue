@@ -4,11 +4,25 @@
       <form>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" class="form-control" name="email" v-model="user.email" />
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            v-model="user.email"
+            :class="[{ 'is-invalid': errorFor('email') }]"
+          />
+          <validation-error :errors="errorFor('email')"></validation-error>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" class="form-control" name="password" v-model="user.password"/>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            v-model="user.password"
+            :class="[{ 'is-invalid': errorFor('password') }]"
+          />
+          <validation-error :errors="errorFor('password')"></validation-error>
         </div>
         <div class="form-check pb-2">
           <input
@@ -31,7 +45,14 @@
   </div>
 </template>
 <script>
+import { is422 } from "../../shared/utils/responses";
+import error_traits from "../../shared/mixins/error_traits";
+import ValidationError from "../../shared/components/ValidationError";
 export default {
+  mixins: [error_traits],
+  components: {
+    ValidationError,
+  },
   data() {
     return {
       user: {
@@ -46,15 +67,17 @@ export default {
     async login() {
       this.loading = true;
       try {
-        await axios.get('/sanctum/csrf-cookie');
+        await axios.get("/sanctum/csrf-cookie");
         try {
-          await axios.post('/api/login', this.user);
-          console.log('Funca');
+          await axios.post("/api/login", this.user);
+          this.$router.push({name:'me'});
         } catch (error) {
-          console.log('No funca');
+          if (is422(error)) {
+            this.errors = error.response.data.errors;
+          }
         }
       } catch (error) {
-        console.log('Fatal');
+        console.log("Fatal");
       }
       this.loading = false;
     },
