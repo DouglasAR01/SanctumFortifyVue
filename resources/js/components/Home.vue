@@ -1,3 +1,5 @@
 <template>
-  <div>Hola</div>
+  <div class="text-centered">
+    hola
+  </div>
 </template>
