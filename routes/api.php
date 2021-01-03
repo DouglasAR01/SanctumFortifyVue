@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+
+$limiter = config('fortify.limiters.login');
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +21,15 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::middleware('auth:sanctum')->group(function(){
-    // Aquí van todas las rutas protegidas
+Route::post('/api/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware(array_filter([
+        'guest',
+        $limiter ? 'throttle:' . $limiter : null,
+    ]));
+
+Route::post('/api/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Your protected routes goes here
 });
