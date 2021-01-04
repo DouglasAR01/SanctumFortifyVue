@@ -16,7 +16,7 @@ class SecretsTableSeeder extends Seeder
     public function run()
     {
         User::all()->each(function($user){
-            $secrets = Secret::factory()->count(2)->make([
+            $secrets = Secret::factory()->count(random_int(2,8))->make([
                 'user_id' => $user->id,
             ]);
             $user->secrets()->saveMany($secrets);

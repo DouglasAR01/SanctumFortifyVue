@@ -21,6 +21,8 @@ dayjs.extend(relativeTime);
 window.Vue = require('vue');
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.filter('fromNow', value => dayjs(value).fromNow());
+Vue.filter('humanDate', value => dayjs(value).format('YYYY/MM/DD'));
 
 // Creación del datastore
 import DataStore from "./store";
