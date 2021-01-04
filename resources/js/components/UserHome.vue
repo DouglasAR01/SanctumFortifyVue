@@ -44,7 +44,7 @@ export default {
       this.user = (await axios.get("/api/user")).data.data;
       this.items = this.user.secrets;
     } catch (error) {
-      console.log(":c");
+      //
     }
     this.loading = false;
   },

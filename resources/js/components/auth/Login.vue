@@ -48,7 +48,6 @@
 import { is422 } from "../../shared/utils/responses";
 import error_traits from "../../shared/mixins/error_traits";
 import ValidationError from "../../shared/components/ValidationError";
-import { logIn } from "../../shared/utils/auth";
 export default {
   mixins: [error_traits],
   components: {
@@ -71,7 +70,7 @@ export default {
         await axios.get("/sanctum/csrf-cookie");
         try {
           await axios.post("/api/login", this.user);
-          logIn();
+          this.$store.dispatch('login');
           this.$router.push({name:'me'});
         } catch (error) {
           if (is422(error)) {

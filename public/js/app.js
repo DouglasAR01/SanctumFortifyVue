@@ -1922,12 +1922,18 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _js_shared_utils_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/shared/utils/auth */ "./resources/js/shared/utils/auth.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
 //
@@ -1952,14 +1958,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  // Log-in and Log-out buttons logic idea taken from https://www.youtube.com/watch?v=8Uwn5M6WTe0
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      isLoggedIn: false
-    };
-  },
-  mounted: function mounted() {
-    this.isLoggedIn = Object(_js_shared_utils_auth__WEBPACK_IMPORTED_MODULE_1__["isLoggedIn"])();
-  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    isLoggedIn: function isLoggedIn(state) {
+      return state.isLoggedIn;
+    }
+  })),
   methods: {
     logout: function logout() {
       var _this = this;
@@ -1969,22 +1972,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _context.prev = 0;
+                _context.next = 3;
                 return axios.post('/api/logout');
 
-              case 2:
-                Object(_js_shared_utils_auth__WEBPACK_IMPORTED_MODULE_1__["logOut"])();
+              case 3:
+                _context.next = 7;
+                break;
+
+              case 5:
+                _context.prev = 5;
+                _context.t0 = _context["catch"](0);
+
+              case 7:
+                _this.$store.dispatch('logout');
 
                 _this.$router.push({
                   name: 'login'
                 });
 
-              case 4:
+              case 9:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee);
+        }, _callee, null, [[0, 5]]);
       }))();
     }
   }
@@ -2067,18 +2079,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 4:
               _this.user = _context.sent.data.data;
               _this.items = _this.user.secrets;
-              _context.next = 11;
+              _context.next = 10;
               break;
 
             case 8:
               _context.prev = 8;
               _context.t0 = _context["catch"](1);
-              console.log(":c");
 
-            case 11:
+            case 10:
               _this.loading = false;
 
-            case 12:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -2104,7 +2115,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_utils_responses__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../shared/utils/responses */ "./resources/js/shared/utils/responses.js");
 /* harmony import */ var _shared_mixins_error_traits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../shared/mixins/error_traits */ "./resources/js/shared/mixins/error_traits.js");
 /* harmony import */ var _shared_components_ValidationError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../shared/components/ValidationError */ "./resources/js/shared/components/ValidationError.vue");
-/* harmony import */ var _shared_utils_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../shared/utils/auth */ "./resources/js/shared/utils/auth.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2160,7 +2170,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_shared_mixins_error_traits__WEBPACK_IMPORTED_MODULE_2__["default"]],
   components: {
@@ -2196,7 +2205,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return axios.post("/api/login", _this.user);
 
               case 7:
-                Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_4__["logIn"])();
+                _this.$store.dispatch('login');
 
                 _this.$router.push({
                   name: 'me'
@@ -56418,14 +56427,12 @@ __webpack_require__.r(__webpack_exports__);
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // Librerías génericas para casi cualquier proyecto
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
 
-
- // Set-up de la librería dayjs para que sirva igual que moment.js
-// Para más info, ver la documentaci/on de DayJs
+ // Dayjs common use set up
 
 
 
@@ -56438,28 +56445,27 @@ Vue.filter('fromNow', function (value) {
 });
 Vue.filter('humanDate', function (value) {
   return dayjs__WEBPACK_IMPORTED_MODULE_4___default()(value).format('YYYY/MM/DD');
-}); // Creación del datastore
+}); // Datastore creation
 
 
-var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store(_store__WEBPACK_IMPORTED_MODULE_6__["default"]);
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// GLOBAL COMPONENT REGISTRATION
-//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store(_store__WEBPACK_IMPORTED_MODULE_6__["default"]); // GLOBAL COMPONENT REGISTRATION
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Check everytime axios make a request if you are unauthenticated.
+// This is useful if the session is destroyed but the Happy token is still in the localStorage
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+window.axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  // 401 = unauthenticated
+  if (error.response.status == 401) {
+    store.dispatch('logout');
+    _routes__WEBPACK_IMPORTED_MODULE_0__["default"].push({
+      name: 'login'
+    });
+  }
 
+  return Promise.reject(error);
+});
 var app = new Vue({
   el: '#app',
   router: _routes__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -56467,7 +56473,8 @@ var app = new Vue({
   components: {
     "index": _Index__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  beforeCreate: function beforeCreate() {// 
+  beforeCreate: function beforeCreate() {
+    this.$store.dispatch('loadSavedData');
   }
 });
 
@@ -57131,10 +57138,31 @@ var is422 = function is422(err) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _shared_utils_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shared/utils/auth */ "./resources/js/shared/utils/auth.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  state: {},
-  mutations: {},
-  actions: {},
+  state: {
+    isLoggedIn: false
+  },
+  mutations: {
+    setLoggedIn: function setLoggedIn(state, payload) {
+      state.isLoggedIn = payload;
+    }
+  },
+  actions: {
+    logout: function logout(context) {
+      Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_0__["logOut"])();
+      context.commit('setLoggedIn', false);
+    },
+    login: function login(context) {
+      Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_0__["logIn"])();
+      context.commit('setLoggedIn', true);
+    },
+    loadSavedData: function loadSavedData(context) {
+      // Here comes all the commits that have to be made everytime the app initialize
+      context.commit('setLoggedIn', Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_0__["isLoggedIn"])());
+    }
+  },
   getters: {}
 });
 

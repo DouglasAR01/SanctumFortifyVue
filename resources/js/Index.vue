@@ -19,22 +19,22 @@
   </div>
 </template>
 <script>
-import { logOut, isLoggedIn } from "../js/shared/utils/auth";
+import { mapState } from 'vuex';
 // Log-in and Log-out buttons logic idea taken from https://www.youtube.com/watch?v=8Uwn5M6WTe0
 export default {
-  data(){
-    return {
-      isLoggedIn: false,
-    };
+  computed: {
+    ...mapState({
+      isLoggedIn: state => state.isLoggedIn
+    })
   },
-  mounted(){
-    this.isLoggedIn = isLoggedIn();
-  },
-
   methods: {
     async logout() {
-      await axios.post('/api/logout');
-      logOut();
+      try {
+        await axios.post('/api/logout');
+      } catch (error) {
+        // No internet conection
+      }      
+      this.$store.dispatch('logout');
       this.$router.push({name:'login'});
     }
   }
